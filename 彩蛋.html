@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     
+        <title>抽奖</title>
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            body{
+                background: url("images/背景2.jpg");
+                background-size: cover;
+            }
+            ul li{
+                list-style: none;
+            }
+            #lis{
+                height: 448px;
+                width: 445px;
+                border: 10px solid #ff236c;
+                margin: 30px auto;
+            }
+            #lis li{
+                height: 140px;
+                width: 140px;
+                border: 1px solid #eee;
+                float: left;
+                opacity: 0.3;
+                margin: 3px;
+                transition: all .3s;
+            }
+            .pirect{
+                width: 455px;
+                margin: 30px auto;
+                background-color: black;
+            }
+            #img:hover{
+                transform: translateY(-5px);
+                box-shadow: 0px 0px 2px rgb(0, 0, 0);
+            }
+            .bnt{
+                height: 30px;
+                width: 200px;
+                color: #ccc;
+                margin: 20px auto;
+            }
+            .bnt input:hover{
+                cursor: pointer;
+            }
+            .bnt input:active{
+                background:#B5B5B5;
+            }
+            .bnt input{
+                height: 30px;
+                width: 200px;
+                border-radius: 20px;
+                border: none;
+                outline:none;
+                
+            }
+            #lis .active{
+                opacity: 1;
+            }
+            * {
+            margin:0;
+            padding:0;
+        }
+        #box {
+            width:150px;
+            height:150px;
+            border-radius:50%;
+            position:absolute;
+            top:0px;
+            left:0px;
+        }
+        
+        @keyframes xuanzhuan {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #box img {
+            width: inherit;
+            height: inherit;
+            border-radius: inherit;
+            box-shadow: 0 0 200px rgb(248, 211, 3); 
+            padding:5px;
+            animation: xuanzhuan 36s linear infinite;
+        }
+
+        </style>
+    </head>
+    <body>
+        <audio src="DAOKO,米津玄師 - 打上花火.mp3" autoplay="autoplay"></audio>
+        <div class="bnt" id="bnt">
+            <input type="button" name="" id="val" value="开始抽奖" />
+
+        </div>
+        <div id="box">
+            <img src="images/抽奖9.jpeg" alt="">
+        </div>
+    
+    <div class="pirect"> 
+        <ul id="lis">
+            <li style="background: url('images/抽奖2.jpeg');" title="永不掉发" id="img"></li>
+            <li style="background: url('images/抽奖3.jpg');" title="狂吃不胖" id="img"></li>
+            <li style="background: url('images/抽奖4.jpeg');" title="不用备课" id="img"></li>
+            <li style="background: url('images/抽奖1长痘.jpg');" title="脸上爆豆" id="img"></li>
+            <li style="background: url('images/抽奖9.jpeg');" title="暴富" id="img"></li>
+            <li style="background: url('images/抽奖5.png');" title="胖50斤" id="img"></li>
+            <li style="background: url('images/抽奖7.jpeg');" title="不用早起" id="img"></li>
+            <li style="background: url('images/抽奖8.jpeg');" title="今天你最美丽" id="img"></li>
+            <li style="background: url('images/抽奖6.jpeg');" title="谢谢参与"id="img"></li>
+             
+
+        </ul>
+    </div>
+        <script type="text/javascript">
+        var oul = document.getElementById('lis')
+        var ali = oul.getElementsByTagName('li');
+        var bnt = document.getElementById('bnt');
+        var va = document.getElementById('val')
+        var num=0;
+        var timer=null;
+        var nam=0;
+        var arr=['永不掉发','狂吃不胖','不用备课','脸上爆豆','暴富','胖50斤','不用早起','今天你最美丽','谢谢参与',];
+        var count=0; 
+       bnt.onclick=function(){
+        clearInterval(timer);
+       start();
+       }
+
+       function start(){
+        timer=setInterval(function(){
+            for(var i=0;i<ali.length;i++){
+            ali[i].className='';            
+            ali[i].test=arr[i];     
+            }
+            num = Math.floor(Math.random()*12); 
+            ali[num].className='active';
+            nam+=10;
+
+            if(nam>=300){ 
+                clearInterval(timer); 
+                alert("恭喜☕："+ali[num].test);
+                if(count>0){
+        va.value="再来一次";
+       }
+            }
+                                
+        },100)
+        nam=0;
+        count++;
+        }
+
+     
+    var box = document.getElementById('box');
+    var dw;
+    var dh;
+    var timer1;
+    window.onresize=function(){
+     dw = document.documentElement.clientWidth;
+     dh = document.documentElement.clientHeight;
+}
+    function scope() {
+        // 可视区域的宽高
+         dw = document.documentElement.clientWidth;
+         dh = document.documentElement.clientHeight;
+        // console.log(dw , dh);
+
+        // 横向速度
+        var x = 10;
+        // 纵向速度
+        var y = 10;
+         
+        timer1=setInterval(function(){
+            // 求出横向临界值
+            var lx = dw - box.offsetWidth;
+            // 判断横向取反
+            if ( box.offsetLeft >= lx || box.offsetLeft < 0){
+                // 方向取反
+                x = -x;
+            }
+            // 计算横向运动最终的结果
+            var left_result = box.offsetLeft + x;
+            if ( left_result >= lx) {
+                left_result = lx;
+            }
+
+
+            // 求出纵向临界值
+            var ly = dh - box.offsetHeight;
+            // 判断纵向取反
+            if ( box.offsetTop >= ly || box.offsetTop < 0){
+                y = -y;
+            }
+
+            // 计算纵向运动最终的结果
+            var top_result = box.offsetTop + y;
+
+            if ( top_result >= ly) {
+                top_result = ly;
+            }
+
+            box.style.left = left_result + 'px';
+            box.style.top = top_result + 'px';
+            console.log(1);
+        }, 20);
+    };
+    scope();
+
+        </script>       
+    </body>
+</html>
